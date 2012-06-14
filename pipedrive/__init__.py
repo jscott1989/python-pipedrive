@@ -3,7 +3,7 @@ from urllib import urlencode
 import json
 from copy import copy
 
-PIPEDRIVE_API_URL = "https://api.pipedrive.com/1.0"
+PIPEDRIVE_API_URL = "https://api.pipedrive.com/1.0/"
 
 class PipedriveError(Exception):
 	def __init__(self, response):
@@ -36,7 +36,10 @@ class Pipedrive(object):
 			# Assume that login is actually the api token
 			self.api_token = login
 
-	def deal_add(self, deal):
-		response = self._request("/deal/add", deal)
-		if 'error' in response:
-			raise PipedriveError(response)
+	def __getattr__(self, name):
+		def wrapper(data):
+			response = self._request(name.replace('_', '/'), data)
+			if 'error' in response:
+				raise PipedriveError(response)
+			return response
+		return wrapper
