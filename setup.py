@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='python-pipedrive',
-    version="0.1.0",
+    version="0.1.1",
     license="MIT",
 
     install_requires = [
@@ -10,13 +10,13 @@ setup(
     ],
 
     description='Light wrapper around Pipedrive API',
-    long_description=open('README.md').read(),
+    long_description=open('README.txt').read(),
 
     author='Jonathan Scott',
     author_email='jonathanscott1989@gmail.com',
 
-    url='https://github.com/jscott1989/python-pipedrive',
-    download_url='https://github.com/jscott1989/python-pipedrive/downloads',
+    url='http://github.com/jscott1989/python-pipedrive',
+    download_url='http://github.com/jscott1989/python-pipedrive/downloads',
 
     include_package_data=True,
 
