@@ -6,11 +6,7 @@ Python library for interacting with the pipedrive.com API
 
 This is being developed for my specific use so there's no guarantee I'll cover all of the aspects of the Pipedrive API. Feel free to add features though, I welcome pull requests.
 
-
-Supported features:
-* auth/login
-* deal/add
-
+All features should be supported though as this is just a lightweight wrapper around the API.
 
 
 Usage:
@@ -18,12 +14,14 @@ Usage:
 Create a Pipedrive object, passing either the api key or your username and password as the parameters
 
 ```python
+from pipedrive import Pipedrive
 pipedrive = Pipedrive(USERNAME, PASSSWORD)
 ```
 
 or
 
 ```python
+from pipedrive import Pipedrive
 pipedrive = Pipedrive(API_KEY)
 ```
 
