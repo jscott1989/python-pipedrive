@@ -31,7 +31,7 @@ class Pipedrive(object):
 			if 'error' in response:
 				raise IncorrectLoginError(response)
 			
-			self.api_token = response['api_token']
+			self.api_token = response['authorization'][0]['api_token']
 		else:
 			# Assume that login is actually the api token
 			self.api_token = login
