@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from httplib2 import Http
 from urllib import urlencode
 import json
 from copy import copy
 
-PIPEDRIVE_API_URL = "https://api.pipedrive.com/1.0/"
+PIPEDRIVE_API_URL = "https://api.pipedrive.com/v1/"
 
 class PipedriveError(Exception):
 	def __init__(self, response):
@@ -15,15 +17,21 @@ class IncorrectLoginError(PipedriveError):
 	pass
 
 class Pipedrive(object):
+	
 	def _request(self, endpoint, data, method="POST"):
+		
 		if self.api_token:
 			data = copy(data)
 			data['api_token'] = self.api_token
-		response, data = self.http.request(PIPEDRIVE_API_URL + endpoint, method=method, body=urlencode(data), headers={'Content-Type': 'application/x-www-form-urlencoded'})
+		
+		if method in ["POST", "PUT"]:
+			response, data = self.http.request(PIPEDRIVE_API_URL + endpoint, method=method, body=urlencode(data), headers={'Content-Type': 'application/x-www-form-urlencoded'})
+		else:
+			response, data = self.http.request("%s%s?%s" % (PIPEDRIVE_API_URL, endpoint, urlencode(data)), method)
 
 		return json.loads(data)
 
-	def __init__(self, login, password = None):
+	def __init__(self, login = None, password = None):
 		self.http = Http()
 		if password:
 			response = self._request("/auth/login", {"login": login, "password": password})
@@ -38,7 +46,12 @@ class Pipedrive(object):
 
 	def __getattr__(self, name):
 		def wrapper(data):
-			response = self._request(name.replace('_', '/'), data)
+			if 'method' in data: 
+				method = data['method'] 
+				del data['method']
+			else: 
+				method = "POST"
+			response = self._request(name, data, method)
 			if 'error' in response:
 				raise PipedriveError(response)
 			return response
