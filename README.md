@@ -27,8 +27,27 @@ pipedrive = Pipedrive(API_KEY)
 
 The rest of the functions relate to the URL as specified in the [API Docs](https://app.pipedrive.com/docs/auth/login).
 
-E.g. to add a deal:
+The two things to note are the HTTP Method, and the path:
 
+Examples:
+
+1. To list the organizations (method = GET, path = organizations)
 ```python
-    pipedrive.deal_add({"deal[title]": "My deal", "deal[value]": 1000, # etc....
+    pipedrive.organizations({'method': 'GET'})
+```
+
+2. Add a New Deal
+```python
+    pipedrive.deals({
+    	'method': 'POST',
+    	'title': 'Big Sucker',
+    	'value': 1000000,
+    	'org_id': 2045,
+    	'status': 'open'
+   	})
+```
+
+3. Delete an Activity
+```python
+    pipedrive.activities({'method': 'DELETE', 'id': 6789})
 ```
