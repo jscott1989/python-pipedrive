@@ -25,7 +25,9 @@ class Pipedrive(object):
 			data['api_token'] = self.api_token
 		
 		if method in ["POST", "PUT"]:
-			response, data = self.http.request(PIPEDRIVE_API_URL + endpoint, method=method, body=urlencode(data), headers={'Content-Type': 'application/x-www-form-urlencoded'})
+			if 'id' not in data:
+				raise PipedriveError("No 'id' field, all updates require one.")
+			response, data = self.http.request("%s%s/%s?api_token=%s" % (PIPEDRIVE_API_URL, endpoint, data['id'], data['api_token']), method=method, body=urlencode(data), headers={'Content-Type': 'application/json'})
 		else:
 			response, data = self.http.request("%s%s?%s" % (PIPEDRIVE_API_URL, endpoint, urlencode(data)), method)
 
