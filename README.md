@@ -30,10 +30,12 @@ The rest of the functions relate to the URL as specified in the [API Docs](https
 The two things to note are the HTTP Method, and the path:
 
 Examples:
+
 1. To list the organizations (method = GET, path = organizations)
 ```python
     pipedrive.organizations({'method': 'GET'})
 ```
+
 2. Add a New Deal
 ```python
     pipedrive.deals({
@@ -41,9 +43,10 @@ Examples:
     	'title': 'Big Sucker',
     	'value': 1000000,
     	'org_id': 2045,
-    	'status': 'open',
+    	'status': 'open'
    	})
 ```
+
 3. Delete an Activity
 ```python
     pipedrive.activities({'method': 'DELETE', 'id': 6789})
