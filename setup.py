@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='python-pipedrive',
-    version="0.1.2",
+    version="0.2",
     license="MIT",
 
     install_requires = [
