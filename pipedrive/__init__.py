@@ -29,7 +29,10 @@ class Pipedrive(object):
 				raise PipedriveError("No 'id' field, all updates require one.")
 			response, data = self.http.request("%s%s/%s?api_token=%s" % (PIPEDRIVE_API_URL, endpoint, data['id'], data['api_token']), method=method, body=urlencode(data), headers={'Content-Type': 'application/json'})
 		else:
-			response, data = self.http.request("%s%s?%s" % (PIPEDRIVE_API_URL, endpoint, urlencode(data)), method)
+                    if 'id' not in data:
+                        response, data = self.http.request("%s%s?%s" % (PIPEDRIVE_API_URL, endpoint, urlencode(data)), method)
+                    else:
+                        response, data = self.http.request("%s%s/%s?%s" % (PIPEDRIVE_API_URL, endpoint, data['id'], urlencode(data)), method)
 
 		return json.loads(data)
 
