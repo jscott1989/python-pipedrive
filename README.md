@@ -27,6 +27,16 @@ pipedrive = Pipedrive(API_KEY)
 
 The rest of the functions relate to the URL as specified in the [API Docs](https://developers.pipedrive.com/v1).
 
+Do yourself a favor and try a few simple requests and look the raw responses to know what data Pipedrive's API gives you. This will aid in knowing how to deal with your responses in python code. For example, to find an organzation:
+
+    
+    curl 'https://api.pipedrive.com/v1/organizations/find?api_token=abcd1234abcd1234abcd1234abcd1234abcd1234&term=microsoft'
+
+which spits out something like:
+
+    {"success":true,"data":[{"id":215,"name":"Microsoft Main Organization","visible_to":"3"},{"id":360,"name":"Microsoft Subdivision Company","visible_to":"3"}],"additional_data":{"pagination":{"start":0,"limit":100,"more_items_in_collection":false}}}
+
+
 The two things to note are the HTTP Method, and the path:
 
 Examples:
