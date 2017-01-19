@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='python-pipedrive',
-    version="0.3",
+    version="0.3.1",
     license="MIT",
 
     install_requires = [
@@ -10,7 +10,7 @@ setup(
     ],
 
     description='Light wrapper around Pipedrive API',
-    long_description=open('README.md').read(),
+    long_description=open('README.txt').read(),
 
     author='Jonathan Scott',
     author_email='jonathanscott1989@gmail.com',
