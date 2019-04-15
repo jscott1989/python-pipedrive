@@ -56,12 +56,23 @@ Examples:
        	}, method='POST')
     ```
 
-3.  Delete an Activity
+3.  Update a New Deal
+    ```python
+        pipedrive.deals({
+        	'id': 5,
+        	'title': 'Biggest Sucker',
+        	'value': 100000000,
+        	'org_id': 2045,
+        	'status': 'open'
+       	}, method='PUT')
+    ```
+
+4.  Delete an Activity
     ```python
         pipedrive.activities({'id': 6789}, method='DELETE')
     ```
 
-4.  Find a person, and use the search results. The variable ```term``` is the search term that has been passed in.
+5.  Find a person, and use the search results. The variable ```term``` is the search term that has been passed in.
     ```python
         import json
         ...
