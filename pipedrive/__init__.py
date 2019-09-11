@@ -44,7 +44,7 @@ class Pipedrive(object):
                 raise ValueError('id was not provided in data, unable to perform Pipedrive update via PUT')
         else:
             uri = PIPEDRIVE_API_URL + endpoint + '?api_token=' + str(self.api_token)
-            response, data = self.http.request(uri, method=method, body=urlencode(data), headers={'Content-Type': 'application/x-www-form-urlencoded'})
+            response, data = self.http.request(uri, method=method, body=json.dumps(data), headers={'Content-Type': 'application/json'})
 
         logger.debug('sending {method} request to {uri}'.format(
             method=method,
@@ -73,8 +73,30 @@ class Pipedrive(object):
 
     def __getattr__(self, name):
         def wrapper(data={}, method='GET'):
+
             response = self._request(name.replace('_', '/'), data, method)
-            if 'error' in response:
-                raise PipedriveError(response)
-            return response
+
+            def _generator():
+                if 'error' in response:
+                    raise PipedriveError(response)
+
+                additional_data = response.get('additional_data', {})
+                pagination_info = additional_data.get('pagination', {})
+
+                logger.debug('pagination_info: {}'.format(pagination_info))
+                if isinstance(response['data'], dict):
+                    yield response['data']
+                else:
+                    yield from response['data']
+
+                if pagination_info.get('more_items_in_collection', False):
+
+                    data.update({
+                        'start': pagination_info['next_start']
+                    })
+
+                    yield from wrapper(data, method)
+
+            return _generator()
+
         return wrapper
