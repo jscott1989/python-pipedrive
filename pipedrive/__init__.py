@@ -73,7 +73,11 @@ class Pipedrive(object):
 
     def __getattr__(self, name):
         def wrapper(data={}, method='GET'):
-            response = self._request(name.replace('_', '/'), data, method)
+            url = name.replace('_', '/')
+            if method == 'PUT' and 'id' in data:
+                url += '/'+str(data['id'])
+                data.pop('id')
+            response = self._request(url, data, method)
             if 'error' in response:
                 raise PipedriveError(response)
             return response
