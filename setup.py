@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-pipedrive',
-    version="0.4.0",
+    version="0.5.0",
     license="MIT",
 
     install_requires=[

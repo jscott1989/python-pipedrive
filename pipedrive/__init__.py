@@ -8,7 +8,7 @@ except ImportError:
 
 import json
 
-PIPEDRIVE_API_URL = "https://api.pipedrive.com/v1/"
+PIPEDRIVE_API_URL = "https://api.pipedrive.com/api/v2/"
 logger = getLogger('pipedrive')
 
 
