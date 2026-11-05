@@ -57,7 +57,7 @@ class Pipedrive(object):
         return json.loads(data.decode('utf-8'))
 
     def __init__(self, email, password=None):
-        self.http = Http()
+        self.http = Http(timeout=30)
         if password:
             response = self._request("/authorizations/", {"email": email, "password": password})
 
